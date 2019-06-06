@@ -17,6 +17,7 @@ npx tsc
 
 # put device in DFU mode (this will cause it to wait for a job)
 node dist/device.js \
+  -cf <certs response from API> \
   -d <device id> \
   -e <mqtt endpoint> \
   -a <fw version> \
@@ -32,4 +33,47 @@ node dist/update-device.js \
   -f <name of the firmware file> 
 
 
+# see source files for a list of accepted arguments
+node dist/(update-device.js|device.js|dfu.js|connection.js)
+```
+
+### Try It Out
+
+The following steps assume you have:
+1. An account on dev.nRFCloud.com.
+2. Obtained your AWS IoT ATS endpoint or [installed the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
+Install the dependencies and compile the source code:
+```
+npm i
+npx tsc
+```
+Get your API KEY from  device id from your dev.nRFCloud.com Account page.
+```
+export API_KEY=<your_api_key>
+```
+Create a new generic device:
+```
+curl -X POST https://api.dev.nrfcloud.com/v1/devices -H "Authorization: Bearer $API_KEY"
+```
+Find the device id of the new device and `export` it:
+```
+curl https://api.dev.nrfcloud.com/v1/devices -H "Authorization: Bearer $API_KEY"
+export DEVICE_ID=<your_device_id>
+```
+Invoke the [`createDeviceCertificate`](https://docs.api.nrfcloud.com/api/api-rest.html#createdevicecertificate) and store the JSON response in `CERTS_RESPONSE`:
+```
+export CERTS_RESPONSE=$(curl -X POST https://api.dev.nrfcloud.com/v1/devices/$DEVICE_ID/certificates -H "Authorization: Bearer $API_KEY")
+```
+Either export `MQTT_ENDPOINT` manually or via the `aws iot` command:
+```
+export MQTT_ENDPOINT=$(aws iot describe-endpoint --endpoint-type iot:Data-ATS | grep endpointAddress | awk '{ print  $2; }' | tr -d '"')
+```
+Now you can run the device simulator:
+```
+node dist/device.js
+```
+If you want to clean up your device:
+```
+curl -X DELETE https://api.dev.nrfcloud.com/v1/devices/$DEVICE_ID -H "Authorization: Bearer $API_KEY"
 ```
