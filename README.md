@@ -8,7 +8,7 @@
 AWS IoT Thing simulator for nRF91 DFU.
 
 ### Getting Started
-```bash
+```sh
 # install deps
 npm i
 
@@ -40,13 +40,10 @@ node dist/(update-device.js|device.js|dfu.js|connection.js)
 ### Try It Out
 
 The following steps assume you have:
-1. An account on dev.nRFCloud.com.
-2. Obtained your AWS IoT ATS endpoint or [installed the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 
-Install the dependencies and compile the source code:
-```
-npm i
-npx tsc
+1. An account on dev.nRFCloud.com.
+1. Obtained your AWS IoT ATS endpoint or [installed the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
 ```
 Get your API KEY from  device id from your dev.nRFCloud.com Account page.
 ```
