@@ -44,7 +44,6 @@ The following steps assume you have:
 1. An account on dev.nRFCloud.com.
 1. Obtained your AWS IoT ATS endpoint or [installed the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 
-```
 Get your API KEY from  device id from your dev.nRFCloud.com Account page.
 ```
 export API_KEY=<your_api_key>
