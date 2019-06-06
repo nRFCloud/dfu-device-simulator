@@ -14,15 +14,18 @@ npm i
 
 # compile to js
 npx tsc
+```
 
-# put device in DFU mode (this will cause it to wait for a job)
+### Commands
+```sh
+# create a device and subscribe to jobs topic
 node dist/device.js \
-  -cf <certs response from API> \
   -d <device id> \
   -e <mqtt endpoint> \
-  -a <fw version> \
+  -a <initial fw version> \
   -c <location of device cert> \
-  -k <location of device key> 
+  -k <location of device key> \
+  -cr <certs response from API>
 
 # create a job for a device
 node dist/update-device.js \
@@ -31,10 +34,6 @@ node dist/update-device.js \
   -a <next fw version> \
   -b <s3 bucket> \
   -f <name of the firmware file> 
-
-
-# see source files for a list of accepted arguments
-node dist/(update-device.js|device.js|dfu.js|connection.js)
 ```
 
 ### Try It Out
